@@ -19,6 +19,13 @@
 
 package com.captainbern.reflection.impl;
 
+import java.lang.reflect.Array;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Modifier;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import com.captainbern.reflection.ClassTemplate;
 import com.captainbern.reflection.EnumModifier;
 import com.captainbern.reflection.Reflection;
@@ -26,13 +33,6 @@ import com.captainbern.reflection.SafeConstructor;
 import com.captainbern.reflection.accessor.FieldAccessor;
 import com.captainbern.reflection.accessor.MethodAccessor;
 import com.captainbern.reflection.matcher.AbstractMatcher;
-
-import java.lang.reflect.Array;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Modifier;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 @SuppressWarnings("unchecked")
 public class EnumModifierImpl<T extends Enum<T>> implements EnumModifier {
@@ -72,7 +72,8 @@ public class EnumModifierImpl<T extends Enum<T>> implements EnumModifier {
 
         CONSTRUCTOR_ACCESSOR_ACCESSOR = constructorClassTemplate.getSafeMethod("getConstructorAccessor").getAccessor();
         ACQUIRE_CONSTRUCTOR_ACCESSOR = constructorClassTemplate.getSafeMethod("acquireConstructorAccessor").getAccessor();
-        NEW_INSTANCE_ACCESSOR = new Reflection().reflect(sun.reflect.ConstructorAccessor.class).getSafeMethod("newInstance", Object[].class).getAccessor();
+		// Idk if Constructor is a valid replacement for this.
+		NEW_INSTANCE_ACCESSOR = new Reflection().reflect(/*sun.reflect.ConstructorAccessor*/Constructor.class).getSafeMethod("newInstance", Object[].class).getAccessor();
     }
 
     private static void fixFields() {
